@@ -1,4 +1,4 @@
-# SplitPay-Mobile-App
+# Mobile App #2
 
-This is the README file for the "SplitPay" application!! test
+This is the README file for the application!! test
 
