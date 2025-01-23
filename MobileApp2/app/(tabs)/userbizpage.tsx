@@ -40,9 +40,10 @@ const BusinessProfileScreen = ({ navigation }) => {
             <Text style={styles.detailText}>Website.com</Text>
             <Text style={styles.detailText}>Open: 1:00 AM - 12:00 AM</Text>
             <Text style={styles.tabContentBody}>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-              In vel dui in ante iaculis maximus nec quis neque. 
-              Praesent congue sagittis ornare...
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. In vel dui in ante iaculis maximus nec quis neque. Praesent congue sagittis ornare. Praesent ultricies viverra malesuada. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Vestibulum a nisl ultricies, dapibus risus sollicitudin, dapibus quam. Maecenas lacinia turpis sem, vitae varius purus convallis eget. Cras posuere pretium ipsum, sit amet efficitur nibh gravida eget.
+
+Morbi ut lacus sapien. Morbi imperdiet placerat nunc, non efficitur nisi tempor in. Sed tincidunt leo purus, vel maximus erat tincidunt eget. Nam sapien nisi, facilisis sed iaculis ut, porta id metus. In dapibus, lacus non rhoncus facilisis, nunc sem luctus orci, in hendrerit magna est ac lacus. Maecenas iaculis libero sapien, in efficitur leo ornare eu. Pellentesque tempor nisi at sapien finibus gravida. Aliquam felis ipsum, fringilla in varius id, feugiat at magna. Vivamus tristique tortor vel enim congue rutrum. In aliquet vestibulum suscipit. Sed commodo lorem eu malesuada dictum. Praesent eget arcu risus. Morbi posuere magna vel metus fermentum tristique. Ut ac elit aliquam, suscipit orci non, luctus ipsum.
+
             </Text>
           </View>
         );
@@ -273,9 +274,7 @@ const BusinessProfileScreen = ({ navigation }) => {
               <View style={styles.popupHeader}>
                 <View style={styles.popupLogoContainer}>
                   <Image
-                    source={{
-                      uri: 'https://upload.wikimedia.org/wikipedia/fr/thumb/c/c8/Twitter_Bird.svg/1259px-Twitter_Bird.svg.png',
-                    }}
+                    source={require('../../assets/images/react-logo.png')}
                     style={styles.popupLogo}
                   />
                 </View>
