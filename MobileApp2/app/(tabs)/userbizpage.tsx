@@ -197,7 +197,10 @@ Morbi ut lacus sapien. Morbi imperdiet placerat nunc, non efficitur nisi tempor 
       <ScrollView contentContainerStyle={styles.scrollContent}>
         {/* Logo */}
         <View style={styles.profilePlaceholder}>
-          <Text style={styles.placeholderText}>Logo / Photo</Text>
+        <Image
+          source={require('../../assets/images/react-logo.png')}
+          style={{ width: 160, height: 160 }}
+        />
         </View>
 
         {/* Stars */}
