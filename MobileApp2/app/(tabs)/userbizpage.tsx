@@ -17,21 +17,17 @@ const BusinessProfileScreen = ({ navigation }) => {
   const [showHours, setShowHours] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
 
-  // 1) Media state, now includes 5 photos and 3 YouTube video links
   const [media, setMedia] = useState([
-    // 5 CAT IMAGES (placeholder)
     { type: 'photo', uri: 'https://placekitten.com/300/200' },
     { type: 'photo', uri: 'https://placekitten.com/301/201' },
     { type: 'photo', uri: 'https://placekitten.com/302/202' },
     { type: 'photo', uri: 'https://placekitten.com/303/203' },
     { type: 'photo', uri: 'https://placekitten.com/304/204' },
-    // 3 VIDEO PLACEHOLDERS (YouTube links)
     { type: 'video', uri: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ' },
     { type: 'video', uri: 'https://www.youtube.com/watch?v=3fumBcKC6RE' },
     { type: 'video', uri: 'https://www.youtube.com/watch?v=ScMzIvxBSi4' },
   ]);
 
-  // 2) Your existing tab content renderer, updated for the 'photos' tab
   const renderTabContent = () => {
     switch (selectedTab) {
       case 'about':
@@ -44,10 +40,9 @@ const BusinessProfileScreen = ({ navigation }) => {
             <Text style={styles.detailText}>Website.com</Text>
             <Text style={styles.detailText}>Open: 1:00 AM - 12:00 AM</Text>
             <Text style={styles.tabContentBody}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. In vel dui in ante iaculis maximus nec quis neque. Praesent congue sagittis ornare. Praesent ultricies viverra malesuada. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Vestibulum a nisl ultricies, dapibus risus sollicitudin, dapibus quam. Maecenas lacinia turpis sem, vitae varius purus convallis eget. Cras posuere pretium ipsum, sit amet efficitur nibh gravida eget.
-
-Morbi ut lacus sapien. Morbi imperdiet placerat nunc, non efficitur nisi tempor in. Sed tincidunt leo purus, vel maximus erat tincidunt eget. Nam sapien nisi, facilisis sed iaculis ut, porta id metus. In dapibus, lacus non rhoncus facilisis, nunc sem luctus orci, in hendrerit magna est ac lacus. Maecenas iaculis libero sapien, in efficitur leo ornare eu. Pellentesque tempor nisi at sapien finibus gravida. Aliquam felis ipsum, fringilla in varius id, feugiat at magna. Vivamus tristique tortor vel enim congue rutrum. In aliquet vestibulum suscipit. Sed commodo lorem eu malesuada dictum. Praesent eget arcu risus. Morbi posuere magna vel metus fermentum tristique. Ut ac elit aliquam, suscipit orci non, luctus ipsum.
- ...
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+              In vel dui in ante iaculis maximus nec quis neque. 
+              Praesent congue sagittis ornare...
             </Text>
           </View>
         );
@@ -120,12 +115,9 @@ Morbi ut lacus sapien. Morbi imperdiet placerat nunc, non efficitur nisi tempor 
           </View>
         );
       case 'photos':
-        // 3) If there's no content, display "No content added"
         if (!media || media.length === 0) {
           return <Text style={styles.tabContentBody}>No content added</Text>;
         }
-
-        // 4) Otherwise, map over the media array and display images or video placeholders
         return (
           <View style={styles.mediaContainer}>
             {media.map((item, index) => {
@@ -139,7 +131,6 @@ Morbi ut lacus sapien. Morbi imperdiet placerat nunc, non efficitur nisi tempor 
                   />
                 );
               } else if (item.type === 'video') {
-                // Placeholder for a video. You can replace it with e.g. react-native-video
                 return (
                   <View key={index} style={styles.videoPlaceholder}>
                     <Ionicons name="play-circle-outline" size={48} color="#333" />
@@ -158,7 +149,6 @@ Morbi ut lacus sapien. Morbi imperdiet placerat nunc, non efficitur nisi tempor 
     }
   };
 
-  // Icon press handlers
   const handleBack = () => navigation?.goBack();
   const handleShare = () => console.log('Share pressed');
   const handleHeart = () => {
@@ -195,25 +185,32 @@ Morbi ut lacus sapien. Morbi imperdiet placerat nunc, non efficitur nisi tempor 
 
       {/* Main Scrollable Content */}
       <ScrollView contentContainerStyle={styles.scrollContent}>
-        {/* Logo */}
-        <View style={styles.profilePlaceholder}>
-        <Image
-          source={require('../../assets/images/react-logo.png')}
-          style={{ width: 160, height: 160 }}
-        />
-        </View>
 
-        {/* Stars */}
-        <View style={styles.starsContainer}>
-          <Text style={styles.star}>★</Text>
-          <Text style={styles.star}>★</Text>
-          <Text style={styles.star}>★</Text>
-          <Text style={styles.star}>★</Text>
-          <Text style={styles.star}>★</Text>
-        </View>
+        {/* HEADER CONTAINER: Holds logo, stars, business name, and the new "subtitle" */}
+        <View style={styles.headerContainer}>
+          {/* Logo */}
+          <View style={styles.profilePlaceholder}>
+            <Image
+              source={require('../../assets/images/react-logo.png')}
+              style={{ width: 160, height: 160 }}
+            />
+          </View>
 
-        {/* Business Name */}
-        <Text style={styles.businessName}>Business Name</Text>
+          {/* Stars */}
+          <View style={styles.starsContainer}>
+            <Text style={styles.star}>★</Text>
+            <Text style={styles.star}>★</Text>
+            <Text style={styles.star}>★</Text>
+            <Text style={styles.star}>★</Text>
+            <Text style={styles.star}>★</Text>
+          </View>
+
+          {/* Business Name */}
+          <Text style={styles.businessName}>Business Name</Text>
+
+          {/* New subtitle for the business type (for example) */}
+          <Text style={styles.businessType}>Barber / Food Truck / Etc.</Text>
+        </View>
 
         {/* Tab Buttons */}
         <View style={styles.tabRow}>
@@ -406,13 +403,21 @@ const styles = StyleSheet.create({
   iconButton: {
     padding: 8,
   },
+
+  // Reduce top padding to move items higher
   scrollContent: {
-    paddingTop: 60,
+    paddingTop: 40, // was 60
     paddingHorizontal: 16,
     paddingBottom: 32,
   },
 
-  // Logo / Photo
+  /* HEADER CONTAINER */
+  headerContainer: {
+    alignItems: 'center',
+    // marginBottom: 1,  space after the header (tested to see if needed)
+  },
+
+  // Logo
   profilePlaceholder: {
     width: 160,
     height: 160,
@@ -420,7 +425,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     justifyContent: 'center',
     alignItems: 'center',
-    alignSelf: 'center',
     marginTop: 1,
   },
   placeholderText: {
@@ -438,7 +442,7 @@ const styles = StyleSheet.create({
   star: {
     fontSize: 24,
     color: '#ffd500',
-    marginHorizontal: 15,
+    marginHorizontal: 13,
   },
 
   // Name
@@ -447,7 +451,15 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     textAlign: 'center',
     marginTop: 5,
-    marginBottom: 20,
+    marginBottom: 5, // tighten up spacing
+  },
+
+  // New subtitle style
+  businessType: {
+    fontSize: 18,
+    color: '#666',
+    marginBottom: 20, // extra space after this line
+    textAlign: 'center',
   },
 
   // Tabs
@@ -472,7 +484,7 @@ const styles = StyleSheet.create({
     color: '#333',
   },
 
-  // Tab Content area
+  // Tab Content
   contentArea: {
     backgroundColor: '#eeeaee',
     borderRadius: 8,
@@ -546,7 +558,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '100%',
   },
-
   popupHeader: {
     flexDirection: 'row',
     width: '100%',
