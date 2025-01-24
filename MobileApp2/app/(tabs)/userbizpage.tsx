@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   SafeAreaView,
   View,
@@ -8,8 +8,11 @@ import {
   ScrollView,
   Modal,
   Image,
+  Dimensions,
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+
+const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 
 const BusinessProfileScreen = ({ navigation }) => {
   const [selectedTab, setSelectedTab] = useState('about');
@@ -17,17 +20,67 @@ const BusinessProfileScreen = ({ navigation }) => {
   const [showHours, setShowHours] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
 
+  // For full-screen media carousel
+  const [mediaModalVisible, setMediaModalVisible] = useState(false);
+  const [selectedIndex, setSelectedIndex] = useState(0);
+
+  // ScrollView ref
+  const scrollRef = useRef(null);
+
+  // Example media
   const [media, setMedia] = useState([
-    { type: 'photo', uri: 'https://placekitten.com/300/200' },
-    { type: 'photo', uri: 'https://placekitten.com/301/201' },
-    { type: 'photo', uri: 'https://placekitten.com/302/202' },
-    { type: 'photo', uri: 'https://placekitten.com/303/203' },
-    { type: 'photo', uri: 'https://placekitten.com/304/204' },
+    {
+      type: 'photo',
+      uri: 'https://images.pexels.com/photos/45201/kitty-cat-kitten-pet-45201.jpeg',
+    },
+    {
+      type: 'photo',
+      uri: 'https://images.pexels.com/photos/416160/pexels-photo-416160.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+    },
+    {
+      type: 'photo',
+      uri: 'https://images.pexels.com/photos/1170986/pexels-photo-1170986.jpeg',
+    },
+    {
+      type: 'photo',
+      uri: 'https://images.pexels.com/photos/57416/cat-sweet-kitty-animals-57416.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+    },
+    {
+      type: 'photo',
+      uri: 'https://images.pexels.com/photos/208984/pexels-photo-208984.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+    },
     { type: 'video', uri: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ' },
     { type: 'video', uri: 'https://www.youtube.com/watch?v=3fumBcKC6RE' },
     { type: 'video', uri: 'https://www.youtube.com/watch?v=ScMzIvxBSi4' },
   ]);
 
+  // ⬇ WHEN MODAL BECOMES VISIBLE, SCROLL TO THE SELECTED INDEX
+  useEffect(() => {
+    if (mediaModalVisible && scrollRef.current) {
+      // Wait a tiny bit to ensure layout is done
+      setTimeout(() => {
+        scrollRef.current.scrollTo({ x: SCREEN_WIDTH * selectedIndex, animated: false });
+      }, 50);
+    }
+  }, [mediaModalVisible, selectedIndex]);
+
+  // Opens media modal at a certain index
+  const openMediaModal = (index) => {
+    setSelectedIndex(index);
+    setMediaModalVisible(true);
+  };
+
+  const closeMediaModal = () => {
+    setMediaModalVisible(false);
+  };
+
+  const handleScrollEnd = (e) => {
+    const offsetX = e.nativeEvent.contentOffset.x;
+    const newIndex = Math.round(offsetX / SCREEN_WIDTH);
+    setSelectedIndex(newIndex);
+  };
+
+  // ============== TAB CONTENT ==============
   const renderTabContent = () => {
     switch (selectedTab) {
       case 'about':
@@ -44,6 +97,11 @@ const BusinessProfileScreen = ({ navigation }) => {
 
 Morbi ut lacus sapien. Morbi imperdiet placerat nunc, non efficitur nisi tempor in. Sed tincidunt leo purus, vel maximus erat tincidunt eget. Nam sapien nisi, facilisis sed iaculis ut, porta id metus. In dapibus, lacus non rhoncus facilisis, nunc sem luctus orci, in hendrerit magna est ac lacus. Maecenas iaculis libero sapien, in efficitur leo ornare eu. Pellentesque tempor nisi at sapien finibus gravida. Aliquam felis ipsum, fringilla in varius id, feugiat at magna. Vivamus tristique tortor vel enim congue rutrum. In aliquet vestibulum suscipit. Sed commodo lorem eu malesuada dictum. Praesent eget arcu risus. Morbi posuere magna vel metus fermentum tristique. Ut ac elit aliquam, suscipit orci non, luctus ipsum.
 
+Mauris nec nibh tellus. Cras mattis dui elit, vitae sagittis dui scelerisque luctus. Nulla in finibus ante, a ultrices ante. Aliquam et nibh mauris. Suspendisse nec lectus eget urna finibus hendrerit sed sed urna. Aliquam id lacus convallis leo finibus eleifend. In faucibus odio ut lacus mollis, et maximus ante volutpat. Integer volutpat odio ac lacinia accumsan. Interdum et malesuada fames ac ante ipsum primis in faucibus. Aliquam pharetra molestie justo, eget cursus arcu. Morbi sollicitudin elit vitae urna fringilla suscipit. Sed euismod blandit luctus. Vestibulum quis augue non tellus pellentesque faucibus. Aenean lobortis sit amet elit eget congue. Nullam sed odio in nunc dignissim faucibus sed eu dolor. Nulla ante quam, malesuada ut risus id, mollis semper risus.
+
+Vivamus at tincidunt turpis. Cras viverra ut mauris eu commodo. Sed nec posuere diam. Donec sollicitudin tellus quis ante hendrerit, in dignissim nunc ornare. Curabitur mauris lectus, sodales et feugiat vitae, ullamcorper eget tellus. Nunc eget ex at libero convallis venenatis vitae quis lorem. Sed porttitor efficitur sodales. Vivamus a lectus lacinia, venenatis justo sed, interdum sapien. Cras viverra est non bibendum maximus.
+
+Morbi eu lorem est. Fusce tempor, orci eu bibendum pulvinar, sem leo bibendum lectus, in efficitur tellus lectus ornare purus. Integer pellentesque nibh id metus dapibus dictum. Sed et purus aliquam, maximus leo in, mollis nisi. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Donec a vehicula mauris, vel placerat risus. Integer id tempus ex, sit amet egestas dui. Etiam scelerisque dapibus augue, nec eleifend quam congue at. Proin turpis felis, ultrices ac porttitor nec, viverra nec nisl. Donec pulvinar commodo euismod. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Morbi nec consequat mi. Maecenas tincidunt magna eget blandit faucibus. Mauris in sapien eget metus tincidunt aliquet a vitae est
             </Text>
           </View>
         );
@@ -79,43 +137,10 @@ Morbi ut lacus sapien. Morbi imperdiet placerat nunc, non efficitur nisi tempor 
                 <Ionicons name="logo-twitter" size={24} style={styles.popupIcon} />
               </TouchableOpacity>
             </View>
-            <View style={styles.popupIconsRow}>
-              <TouchableOpacity
-                style={styles.popupIconButton}
-                onPress={() => console.log('Github pressed')}
-              >
-                <Ionicons name="logo-github" size={24} style={styles.popupIcon} />
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.popupIconButton}
-                onPress={() => console.log('Tiktok pressed')}
-              >
-                <Ionicons name="logo-tiktok" size={24} style={styles.popupIcon} />
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.popupIconButton}
-                onPress={() => console.log('Snapchat pressed')}
-              >
-                <Ionicons name="logo-snapchat" size={24} style={styles.popupIcon} />
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.popupIconButton}
-                onPress={() => console.log('Twitch pressed')}
-              >
-                <Ionicons name="logo-twitch" size={24} style={styles.popupIcon} />
-              </TouchableOpacity>
-            </View>
-            <View style={styles.popupIconsRow}>
-              <TouchableOpacity
-                style={styles.popupIconButton}
-                onPress={() => console.log('Discord pressed')}
-              >
-                <Ionicons name="logo-discord" size={24} style={styles.popupIcon} />
-              </TouchableOpacity>
-            </View>
+            {/* ... more icons, etc. */}
           </View>
         );
-      case 'photos':
+      case 'gallery':
         if (!media || media.length === 0) {
           return <Text style={styles.tabContentBody}>No content added</Text>;
         }
@@ -124,19 +149,30 @@ Morbi ut lacus sapien. Morbi imperdiet placerat nunc, non efficitur nisi tempor 
             {media.map((item, index) => {
               if (item.type === 'photo') {
                 return (
-                  <Image
+                  <TouchableOpacity
                     key={index}
-                    source={{ uri: item.uri }}
-                    style={styles.mediaItem}
-                    resizeMode="cover"
-                  />
+                    onPress={() => openMediaModal(index)}
+                    activeOpacity={0.8}
+                  >
+                    <Image
+                      source={{ uri: item.uri }}
+                      style={styles.mediaItem}
+                      resizeMode="cover"
+                    />
+                  </TouchableOpacity>
                 );
               } else if (item.type === 'video') {
                 return (
-                  <View key={index} style={styles.videoPlaceholder}>
-                    <Ionicons name="play-circle-outline" size={48} color="#333" />
-                    <Text style={{ textAlign: 'center' }}>YouTube Video Link</Text>
-                  </View>
+                  <TouchableOpacity
+                    key={index}
+                    onPress={() => openMediaModal(index)}
+                    activeOpacity={0.8}
+                  >
+                    <View style={styles.videoPlaceholder}>
+                      <Ionicons name="play-circle-outline" size={48} color="#333" />
+                      <Text style={{ textAlign: 'center' }}>YouTube Video Link</Text>
+                    </View>
+                  </TouchableOpacity>
                 );
               }
               return null;
@@ -150,6 +186,7 @@ Morbi ut lacus sapien. Morbi imperdiet placerat nunc, non efficitur nisi tempor 
     }
   };
 
+  // ICON HANDLERS
   const handleBack = () => navigation?.goBack();
   const handleShare = () => console.log('Share pressed');
   const handleHeart = () => {
@@ -186,8 +223,7 @@ Morbi ut lacus sapien. Morbi imperdiet placerat nunc, non efficitur nisi tempor 
 
       {/* Main Scrollable Content */}
       <ScrollView contentContainerStyle={styles.scrollContent}>
-
-        {/* HEADER CONTAINER: Holds logo, stars, business name, and the new "subtitle" */}
+        {/* HEADER */}
         <View style={styles.headerContainer}>
           {/* Logo */}
           <View style={styles.profilePlaceholder}>
@@ -209,11 +245,11 @@ Morbi ut lacus sapien. Morbi imperdiet placerat nunc, non efficitur nisi tempor 
           {/* Business Name */}
           <Text style={styles.businessName}>Business Name</Text>
 
-          {/* New subtitle for the business type (for example) */}
+          {/* Subtitle */}
           <Text style={styles.businessType}>Barber / Food Truck / Etc.</Text>
         </View>
 
-        {/* Tab Buttons */}
+        {/* Tabs */}
         <View style={styles.tabRow}>
           <TouchableOpacity
             style={[styles.tabButton, selectedTab === 'about' && styles.tabButtonActive]}
@@ -228,10 +264,10 @@ Morbi ut lacus sapien. Morbi imperdiet placerat nunc, non efficitur nisi tempor 
             <Text style={styles.tabButtonText}>Socials</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={[styles.tabButton, selectedTab === 'photos' && styles.tabButtonActive]}
-            onPress={() => setSelectedTab('photos')}
+            style={[styles.tabButton, selectedTab === 'gallery' && styles.tabButtonActive]}
+            onPress={() => setSelectedTab('gallery')}
           >
-            <Text style={styles.tabButtonText}>Photos</Text>
+            <Text style={styles.tabButtonText}>Gallery</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={[styles.tabButton, selectedTab === 'reviews' && styles.tabButtonActive]}
@@ -251,7 +287,7 @@ Morbi ut lacus sapien. Morbi imperdiet placerat nunc, non efficitur nisi tempor 
         <View style={styles.contentArea}>{renderTabContent()}</View>
       </ScrollView>
 
-      {/* MODAL POPUP */}
+      {/* MODAL POPUP (Briefcase) */}
       <Modal
         visible={modalVisible}
         animationType="fade"
@@ -359,16 +395,81 @@ Morbi ut lacus sapien. Morbi imperdiet placerat nunc, non efficitur nisi tempor 
 
               {showHours && (
                 <View style={styles.hoursList}>
-                  <Text style={styles.hoursItem}>M 1:00AM - 12:00AM</Text>
-                  <Text style={styles.hoursItem}>T 1:00AM - 12:00AM</Text>
-                  <Text style={styles.hoursItem}>W 1:00AM - 12:00AM</Text>
-                  <Text style={styles.hoursItem}>TH 1:00AM - 12:00AM</Text>
-                  <Text style={styles.hoursItem}>F 1:00AM - 12:00AM</Text>
-                  <Text style={styles.hoursItem}>S 1:00AM - 12:00AM</Text>
+                  <Text style={styles.hoursItem}>Mon. 1:00AM - 12:00AM</Text>
+                  <Text style={styles.hoursItem}>Tue. 1:00AM - 12:00AM</Text>
+                  <Text style={styles.hoursItem}>Wed. 1:00AM - 12:00AM</Text>
+                  <Text style={styles.hoursItem}>Thu. 1:00AM - 12:00AM</Text>
+                  <Text style={styles.hoursItem}>Fri. 1:00AM - 12:00AM</Text>
+                  <Text style={styles.hoursItem}>Sat. By Appointment</Text>
+                  <Text style={styles.hoursItem}>Sun. By Appointment</Text>
                 </View>
               )}
             </View>
           </View>
+        </View>
+      </Modal>
+
+      {/* FULLSCREEN MEDIA CAROUSEL MODAL */}
+      <Modal
+        visible={mediaModalVisible}
+        animationType="slide"
+        transparent={false}
+        onRequestClose={closeMediaModal}
+      >
+        <View style={styles.fullScreenContainer}>
+          {/* Close button */}
+          <TouchableOpacity style={styles.closeMediaButton} onPress={closeMediaModal}>
+            <Ionicons name="close-circle-outline" size={42} color="#fff" />
+          </TouchableOpacity>
+
+          <ScrollView
+            ref={scrollRef}
+            horizontal
+            pagingEnabled
+            showsHorizontalScrollIndicator={false}
+            onMomentumScrollEnd={handleScrollEnd}
+            style={{ flex: 1 }}
+          >
+            {media.map((item, idx) => (
+              <View
+                key={idx}
+                style={{
+                  width: SCREEN_WIDTH,
+                  height: SCREEN_HEIGHT,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  backgroundColor: '#000',
+                }}
+              >
+                {item.type === 'photo' ? (
+                  <Image
+                    source={{ uri: item.uri }}
+                    style={{ width: '100%', height: '100%' }}
+                    resizeMode="contain"
+                  />
+                ) : (
+                  <View
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                    }}
+                  >
+                    <Ionicons name="play-circle-outline" size={64} color="#fff" />
+                    <Text style={{ color: '#fff', textAlign: 'center', marginTop: 10 }}>
+                      YouTube Video Link: {item.uri}
+                    </Text>
+                  </View>
+                )}
+              </View>
+            ))}
+          </ScrollView>
+
+          {/* Index indicator */}
+          <Text style={styles.indexText}>
+            {selectedIndex + 1} / {media.length}
+          </Text>
         </View>
       </Modal>
     </SafeAreaView>
@@ -378,7 +479,6 @@ Morbi ut lacus sapien. Morbi imperdiet placerat nunc, non efficitur nisi tempor 
 export default BusinessProfileScreen;
 
 const styles = StyleSheet.create({
-  /* Main screen layout */
   safeArea: {
     flex: 1,
     backgroundColor: '#fcf8fc',
@@ -402,21 +502,15 @@ const styles = StyleSheet.create({
   iconButton: {
     padding: 8,
   },
-
-  // Reduce top padding to move items higher
   scrollContent: {
-    paddingTop: 40, // was 60
+    paddingTop: 40,
     paddingHorizontal: 16,
     paddingBottom: 32,
   },
 
-  /* HEADER CONTAINER */
   headerContainer: {
     alignItems: 'center',
-    // marginBottom: 1,  space after the header (tested to see if needed)
   },
-
-  // Logo
   profilePlaceholder: {
     width: 160,
     height: 160,
@@ -426,12 +520,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 1,
   },
-  placeholderText: {
-    color: '#555',
-    fontSize: 12,
-  },
 
-  // Stars
+  // stars
   starsContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
@@ -444,24 +534,21 @@ const styles = StyleSheet.create({
     marginHorizontal: 13,
   },
 
-  // Name
+  // business name
   businessName: {
     fontSize: 28,
     fontWeight: '600',
     textAlign: 'center',
     marginTop: 5,
-    marginBottom: 5, // tighten up spacing
+    marginBottom: 5,
   },
-
-  // New subtitle style
   businessType: {
     fontSize: 18,
     color: '#666',
-    marginBottom: 20, // extra space after this line
+    marginBottom: 20,
     textAlign: 'center',
   },
 
-  // Tabs
   tabRow: {
     flexDirection: 'row',
     flexWrap: 'wrap',
@@ -483,7 +570,6 @@ const styles = StyleSheet.create({
     color: '#333',
   },
 
-  // Tab Content
   contentArea: {
     backgroundColor: '#eeeaee',
     borderRadius: 8,
@@ -510,7 +596,6 @@ const styles = StyleSheet.create({
     lineHeight: 20,
   },
 
-  // Media container (photos/videos)
   mediaContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
@@ -527,13 +612,13 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
     margin: 8,
-    backgroundColor: '#ddd',
+    backgroundColor: '#999',
     borderRadius: 6,
     justifyContent: 'center',
     alignItems: 'center',
   },
 
-  /* MODAL POPUP */
+  // Briefcase Modal
   modalOverlay: {
     flex: 1,
     backgroundColor: 'rgba(0,0,0,0.5)',
@@ -612,5 +697,29 @@ const styles = StyleSheet.create({
     fontSize: 14,
     marginBottom: 4,
     textAlign: 'center',
+  },
+
+  // Fullscreen Media Carousel
+  fullScreenContainer: {
+    flex: 1,
+    backgroundColor: '#000',
+    position: 'relative',
+  },
+  closeMediaButton: {
+    position: 'absolute',
+    top: 40,
+    right: 20,
+    zIndex: 999,
+  },
+  indexText: {
+    position: 'absolute',
+    bottom: 40,
+    alignSelf: 'center',
+    color: '#fff',
+    fontSize: 16,
+    backgroundColor: 'rgba(0,0,0,0.3)',
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 6,
   },
 });
