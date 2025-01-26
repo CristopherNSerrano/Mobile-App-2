@@ -481,7 +481,7 @@ export default BusinessProfileScreen;
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: '#fcf8fc',
+    backgroundColor: '#fff',
   },
   floatingBackButtonContainer: {
     position: 'absolute',
