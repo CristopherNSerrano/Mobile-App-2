@@ -1071,7 +1071,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 10,
     borderWidth: 1,
-    borderColor: '#000000', // Black accent
+    borderColor: '#fff', // Black accent
   },
   profileImage: {
     width: '100%',
@@ -1498,13 +1498,13 @@ const styles = StyleSheet.create({
   },
   popupLogoContainer: {
     backgroundColor: '#F0F0F0',
-    width: 60,
-    height: 60,
+    width: 65,
+    height: 65,
     borderRadius: 10,
     overflow: 'hidden',
     marginRight: 8,
     borderWidth: 1,
-    borderColor: '#000000', // Black border
+    borderColor: '#fff', // Black border
   },
   popupLogo: {
     width: '100%',
