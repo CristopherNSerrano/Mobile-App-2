@@ -545,11 +545,11 @@ Mauris nec nibh tellus. Cras mattis dui elit, vitae sagittis dui scelerisque luc
                 />
                 </View>
                 <View style={styles.starsContainer}>
-                <Ionicons name="star" size={20} color="#000000" style={styles.star} />
-                <Ionicons name="star" size={20} color="#000000" style={styles.star} />
-                <Ionicons name="star" size={20} color="#000000" style={styles.star} />
-                <Ionicons name="star" size={20} color="#000000" style={styles.star} />
-                <Ionicons name="star" size={20} color="#000000" style={styles.star} />
+                <Ionicons name="star" size={20} color="#ffd500" style={styles.star} />
+                <Ionicons name="star" size={20} color="#ffd500" style={styles.star} />
+                <Ionicons name="star" size={20} color="#ffd500" style={styles.star} />
+                <Ionicons name="star" size={20} color="#ffd500" style={styles.star} />
+                <Ionicons name="star-half-outline" size={20} color="#ffd500" style={styles.star} />
                 </View>
             </View>
             );
@@ -622,7 +622,7 @@ Mauris nec nibh tellus. Cras mattis dui elit, vitae sagittis dui scelerisque luc
                 </TouchableOpacity>
 
                 {/* Inner Card Container */}
-                <View>
+                
                   {/* Popup Content */}
                   <View style={styles.popupContent}>
                     {/* Popup Header */}
@@ -635,11 +635,11 @@ Mauris nec nibh tellus. Cras mattis dui elit, vitae sagittis dui scelerisque luc
                         />
                       </View>
                       <View style={styles.popupstarsContainer}>
-                        <Ionicons name="star" size={20} color="#000000" style={styles.popstar} />
-                        <Ionicons name="star" size={20} color="#000000" style={styles.popstar} />
-                        <Ionicons name="star" size={20} color="#000000" style={styles.popstar} />
-                        <Ionicons name="star" size={20} color="#000000" style={styles.popstar} />
-                        <Ionicons name="star-half" size={20} color="#000000" style={styles.popstar} />
+                        <Ionicons name="star" style={styles.popstar} />
+                        <Ionicons name="star" style={styles.popstar} />
+                        <Ionicons name="star" style={styles.popstar} />
+                        <Ionicons name="star" style={styles.popstar} />
+                        <Ionicons name="star-half" style={styles.popstar} />
                       </View>
                     </View>
 
@@ -747,7 +747,6 @@ Mauris nec nibh tellus. Cras mattis dui elit, vitae sagittis dui scelerisque luc
                       </View>
                     )}
                   </View>
-                </View>
               </View>
             </TouchableWithoutFeedback>
           </View>
@@ -1086,7 +1085,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   star: {
-    marginHorizontal: 3,
+    fontSize: 21,
+    color: '#ffd700',
+    marginHorizontal: 13,
   },
 
   /* Sticky Header: Name + Type */
@@ -1177,7 +1178,7 @@ const styles = StyleSheet.create({
   mediaItem: {
     width: 100,
     height: 180,
-    borderRadius: 8, 
+    borderRadius: 4, 
     backgroundColor: '#E0E0E0',
     borderWidth: 1,
     borderColor: '#000000', 
@@ -1492,14 +1493,14 @@ const styles = StyleSheet.create({
   popupHeader: {
     flexDirection: 'row',
     width: '100%',
-    justifyContent: 'flex-start',
-    marginBottom: 12,
+    justifyContent: 'center',
+    marginBottom: 10,
   },
   popupLogoContainer: {
     backgroundColor: '#F0F0F0',
     width: 60,
     height: 60,
-    borderRadius: 12,
+    borderRadius: 10,
     overflow: 'hidden',
     marginRight: 8,
     borderWidth: 1,
@@ -1516,9 +1517,9 @@ const styles = StyleSheet.create({
     marginLeft: 8,
   },
   popstar: {
-    fontSize: 20,
-    color: '#000', // Gold color
-    marginHorizontal: 2,
+    fontSize: 22,
+    color: '#ffd700', // Gold color
+    marginHorizontal: 12,
   },
   popupIconsRow: {
     flexDirection: 'row',
@@ -1537,7 +1538,7 @@ const styles = StyleSheet.create({
   popupDivider: {
     width: '100%',
     height: 1,
-    backgroundColor: '#CCCCCC',
+    backgroundColor: '#000',
     marginVertical: 8,
   },
   hoursToggle: {
