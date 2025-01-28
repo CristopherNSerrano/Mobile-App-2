@@ -3,16 +3,15 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Index from './(tabs)/index';  // Your main screen
 import LoginPage from './(tabs)/LoginPage'; // Login screen
+import AuthNavigator from './(tabs)/AuthNavigator';
+import 'react-native-gesture-handler';
 
 const Stack = createNativeStackNavigator();
 
 const App = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Index">
-        <Stack.Screen name="Index" component={Index} />
-        <Stack.Screen name="Login" component={LoginPage} />
-      </Stack.Navigator>
+      <AuthNavigator />
     </NavigationContainer>
   );
 };
