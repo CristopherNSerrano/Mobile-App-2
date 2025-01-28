@@ -13,7 +13,7 @@ const Stack = createNativeStackNavigator();
 const App = () => {
   return (
     <NavigationContainer>
-      <AuthNavigator />
+      <AuthNavigator /> 
     </NavigationContainer>
   );
 };
