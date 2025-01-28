@@ -27,7 +27,7 @@ const LoginScreen: React.FC<Props> = ({ navigation }) => {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.title}>Login</Text>
-      
+
       {error ? <Text style={styles.error}>{error}</Text> : null}
 
       <TextInput
@@ -59,48 +59,48 @@ const LoginScreen: React.FC<Props> = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flexGrow: 1,
-    justifyContent: 'center',
-    padding: 20,
-  },
-  title: {
-    fontSize: 32,
-    fontWeight: 'bold',
-    marginBottom: 20,
-    textAlign: 'center',
-  },
-  input: {
-    height: 50,
-    borderColor: '#ccc',
-    borderWidth: 1,
-    borderRadius: 5,
-    paddingHorizontal: 15,
-    marginBottom: 15,
-    fontSize: 16,
-  },
-  button: {
-    backgroundColor: '#007bff',
-    padding: 15,
-    borderRadius: 5,
-    alignItems: 'center',
-    marginBottom: 15,
-  },
-  buttonText: {
-    color: 'white',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  link: {
-    color: '#007bff',
-    textAlign: 'center',
-    marginTop: 10,
-  },
-  error: {
-    color: 'red',
-    textAlign: 'center',
-    marginBottom: 10,
-  },
-});
-
-export default LoginScreen;
+    container: {
+      flexGrow: 1,
+      justifyContent: 'center',
+      padding: 20,
+    },
+    title: {
+      fontSize: 32,
+      fontWeight: 'bold',
+      marginBottom: 20,
+      textAlign: 'center',
+    },
+    input: {
+      height: 50,
+      borderColor: '#ccc',
+      borderWidth: 1,
+      borderRadius: 5,
+      paddingHorizontal: 15,
+      marginBottom: 15,
+      fontSize: 16,
+    },
+    button: {
+      backgroundColor: '#007bff',
+      padding: 15,
+      borderRadius: 5,
+      alignItems: 'center',
+      marginBottom: 15,
+    },
+    buttonText: {
+      color: 'white',
+      fontSize: 16,
+      fontWeight: 'bold',
+    },
+    link: {
+      color: '#007bff',
+      textAlign: 'center',
+      marginTop: 10,
+    },
+    error: {
+      color: 'red',
+      textAlign: 'center',
+      marginBottom: 10,
+    },
+  });
+  
+  export default LoginScreen;
