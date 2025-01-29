@@ -1,106 +1,46 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, ScrollView } from 'react-native';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { AuthStackParamList } from './AuthNavigator';
+import { View, Text, TextInput, Button } from 'react-native';
+import { useAuth } from '../navigation/RootNavigator';
+//import AsyncStorage from '@react-native-async-storage/async-storage';
 
-type LoginScreenNavigationProp = StackNavigationProp<AuthStackParamList, 'Login'>;
-
-interface Props {
-  navigation: LoginScreenNavigationProp;
-}
-
-const LoginScreen: React.FC<Props> = ({ navigation }) => {
+const LoginScreen = () => {
+  const { setIsAuthenticated } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
 
-  const handleLogin = () => {
-    if (!email || !password) {
-      setError('Please fill in all fields');
-      return;
+  const handleLogin = async () => {
+    // TODO: Replace with your actual login logic (API call)
+    // On successful login:
+    const token = 'dummy-auth-token'; // Replace with actual token from API
+    try {
+      await AsyncStorage.setItem('authToken', token);
+      setIsAuthenticated(true);
+    } catch (error) {
+      console.error('Error saving auth token:', error);
     }
-    // Add your authentication logic here
-    Alert.alert('Login Attempt', `Email: ${email}\nPassword: ${password}`);
-    setError('');
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.title}>Login</Text>
-
-      {error ? <Text style={styles.error}>{error}</Text> : null}
-
+    <View style={{ flex: 1, justifyContent: 'center', padding: 16 }}>
+      <Text>Login</Text>
       <TextInput
-        style={styles.input}
         placeholder="Email"
         value={email}
         onChangeText={setEmail}
-        autoCapitalize="none"
+        style={{ borderWidth: 1, marginVertical: 8, padding: 8 }}
         keyboardType="email-address"
+        autoCapitalize="none"
       />
-
       <TextInput
-        style={styles.input}
         placeholder="Password"
         value={password}
         onChangeText={setPassword}
+        style={{ borderWidth: 1, marginVertical: 8, padding: 8 }}
         secureTextEntry
       />
-
-      <TouchableOpacity style={styles.button} onPress={handleLogin}>
-        <Text style={styles.buttonText}>Login</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
-        <Text style={styles.link}>Don't have an account? Sign Up here</Text>
-      </TouchableOpacity>
-    </ScrollView>
+      <Button title="Login" onPress={handleLogin} />
+    </View>
   );
 };
 
-const styles = StyleSheet.create({
-    container: {
-      flexGrow: 1,
-      justifyContent: 'center',
-      padding: 20,
-    },
-    title: {
-      fontSize: 32,
-      fontWeight: 'bold',
-      marginBottom: 20,
-      textAlign: 'center',
-    },
-    input: {
-      height: 50,
-      borderColor: '#ccc',
-      borderWidth: 1,
-      borderRadius: 5,
-      paddingHorizontal: 15,
-      marginBottom: 15,
-      fontSize: 16,
-    },
-    button: {
-      backgroundColor: '#007bff',
-      padding: 15,
-      borderRadius: 5,
-      alignItems: 'center',
-      marginBottom: 15,
-    },
-    buttonText: {
-      color: 'white',
-      fontSize: 16,
-      fontWeight: 'bold',
-    },
-    link: {
-      color: '#007bff',
-      textAlign: 'center',
-      marginTop: 10,
-    },
-    error: {
-      color: 'red',
-      textAlign: 'center',
-      marginBottom: 10,
-    },
-  });
-  
-  export default LoginScreen;
+export default LoginScreen;
