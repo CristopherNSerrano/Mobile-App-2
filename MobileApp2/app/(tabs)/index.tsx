@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fdfdfd',
   },
   title: {
-    fontSize: 26,
+    fontSize: 45,
     fontWeight: '600',
     marginBottom: 40,
   },
