@@ -8,7 +8,7 @@ export default function LandingScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Welcome to My App</Text>
+      <Text style={styles.title}>Bizko</Text>
       <View style={styles.buttonContainer}>
         
         {/* LOG IN BUTTON */}
